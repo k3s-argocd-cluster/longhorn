@@ -3576,11 +3576,11 @@ spec:
     spec:
       initContainers:
       - name: wait-longhorn-admission-webhook
-        image: slig2008/longhorn-manager:master-5a6f8e8
+        image: slig2008/longhorn-manager:master-41a34f8
         command: ['sh', '-c', 'while [ $(curl -m 1 -s -o /dev/null -w "%{http_code}" -k https://longhorn-admission-webhook:9443/v1/healthz) != "200" ]; do echo waiting; sleep 2; done']
       containers:
       - name: longhorn-manager
-        image: slig2008/longhorn-manager:master-5a6f8e8
+        image: slig2008/longhorn-manager:master-41a34f8
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
@@ -3589,7 +3589,7 @@ spec:
         - -d
         - daemon
         - --engine-image
-        - "slig2008/longhorn-engine:master-acdfe5b"
+        - "slig2008/longhorn-engine:master-f0a9228"
         - --instance-manager-image
         - "longhornio/longhorn-instance-manager:v2_20221123"
         - --share-manager-image
@@ -3599,7 +3599,7 @@ spec:
         - --support-bundle-manager-image
         - "longhornio/support-bundle-kit:v0.0.13"
         - --manager-image
-        - "slig2008/longhorn-manager:master-5a6f8e8"
+        - "slig2008/longhorn-manager:master-41a34f8"
         - --service-account
         - longhorn-service-account
         ports:
@@ -3675,18 +3675,18 @@ spec:
     spec:
       initContainers:
         - name: wait-longhorn-manager
-          image: slig2008/longhorn-manager:master-5a6f8e8
+          image: slig2008/longhorn-manager:master-41a34f8
           command: ['sh', '-c', 'while [ $(curl -m 1 -s -o /dev/null -w "%{http_code}" http://longhorn-backend:9500/v1) != "200" ]; do echo waiting; sleep 2; done']
       containers:
         - name: longhorn-driver-deployer
-          image: slig2008/longhorn-manager:master-5a6f8e8
+          image: slig2008/longhorn-manager:master-41a34f8
           imagePullPolicy: IfNotPresent
           command:
           - longhorn-manager
           - -d
           - deploy-driver
           - --manager-image
-          - "slig2008/longhorn-manager:master-5a6f8e8"
+          - "slig2008/longhorn-manager:master-41a34f8"
           - --manager-url
           - http://longhorn-backend:9500/v1
           env:
@@ -3754,7 +3754,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: longhorn-recovery-backend
-        image: slig2008/longhorn-manager:master-5a6f8e8
+        image: slig2008/longhorn-manager:master-41a34f8
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsUser: 2000
@@ -3808,7 +3808,7 @@ spec:
     spec:
       containers:
       - name: longhorn-ui
-        image: slig2008/longhorn-ui:master-f823fe6
+        image: slig2008/longhorn-ui:master-ea8bdc3
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name : nginx-cache
@@ -3871,7 +3871,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: longhorn-conversion-webhook
-        image: slig2008/longhorn-manager:master-5a6f8e8
+        image: slig2008/longhorn-manager:master-41a34f8
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsUser: 2000
@@ -3931,14 +3931,14 @@ spec:
               topologyKey: kubernetes.io/hostname
       initContainers:
       - name: wait-longhorn-conversion-webhook
-        image: slig2008/longhorn-manager:master-5a6f8e8
+        image: slig2008/longhorn-manager:master-41a34f8
         command: ['sh', '-c', 'while [ $(curl -m 1 -s -o /dev/null -w "%{http_code}" -k https://longhorn-conversion-webhook:9443/v1/healthz) != "200" ]; do echo waiting; sleep 2; done']
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsUser: 2000
       containers:
       - name: longhorn-admission-webhook
-        image: slig2008/longhorn-manager:master-5a6f8e8
+        image: slig2008/longhorn-manager:master-41a34f8
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsUser: 2000
